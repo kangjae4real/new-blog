@@ -7,3 +7,7 @@
 # Misc
 .DS_Store
 **/*/.DS_Store
+
+# Docker
+docker/.dev-db
+docker/.prod-db

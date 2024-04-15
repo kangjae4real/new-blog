@@ -1,0 +1,55 @@
+version: "3"
+
+volumes:
+  db:
+
+services:
+  db:
+    hostname: db
+    container_name: db
+    restart: unless-stopped
+    image: postgres:16
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: blog_prod
+    volumes:
+      - ../.prod-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+
+  api:
+    hostname: api
+    container_name: api
+    build:
+      context: ../../apps/api
+      dockerfile: Dockerfile
+    volumes:
+      - ../../apps/api:/api
+    environment:
+      COMMAND: "start"
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    depends_on:
+      - db
+
+  web:
+    hostname: web
+    container_name: web
+    build:
+      context: ../../apps/web
+      dockerfile: Dockerfile
+    volumes:
+      - ../../apps/web:/web
+    environment:
+      COMMAND: "start"
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    depends_on:
+      - api
