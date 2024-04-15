@@ -4,9 +4,9 @@ import { Config } from '@/config/config.type';
 
 @Injectable()
 export class ConfigService {
-  constructor(private readonly configService: NestConfigService) {}
+  constructor(private readonly nestConfigService: NestConfigService) {}
 
-  get(envKey: keyof Config): string | number {
-    return this.configService.get(envKey);
+  get(envKey: keyof Config) {
+    return this.nestConfigService.get(envKey);
   }
 }

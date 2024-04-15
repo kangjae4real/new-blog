@@ -1,11 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 
-export type SwaggerUtilParams<Return = void> = (
+export type SwaggerUtilParams<ReturnType = void> = (
   app: INestApplication,
   title?: string,
   path?: string,
-) => Return;
+) => ReturnType;
 
 export const getDocument: SwaggerUtilParams<OpenAPIObject> = (app, title) => {
   const config = new DocumentBuilder()

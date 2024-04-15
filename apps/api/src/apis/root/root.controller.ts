@@ -5,11 +5,11 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @Controller('')
 export class RootController {
   @ApiOperation({
-    summary: 'Root Test Endpoint',
+    summary: 'Root Endpoint',
     description: 'Returned default text',
   })
   @Get()
-  async root() {
+  root(): string {
     return 'Kangjae Choi Blog - API';
   }
 }
