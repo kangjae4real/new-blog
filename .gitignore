@@ -1,0 +1,9 @@
+# Jetbrains
+.idea
+**/*/.idea
+.fleet
+**/*/.fleet
+
+# Misc
+.DS_Store
+**/*/.DS_Store
