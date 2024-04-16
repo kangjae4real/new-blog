@@ -13,7 +13,7 @@ const typeORM = TypeOrmModule.forRootAsync({
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
-    synchronize: true,
+    synchronize: configService.get('env') === 'local',
   }),
 });
 
