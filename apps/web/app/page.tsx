@@ -1,7 +1,10 @@
+import PageLayout from "@/components/layouts/page-layout";
+import Hero from "@/components/hero";
+
 export default function IndexPage() {
   return (
-    <div>
-      <span>Index</span>
-    </div>
+    <PageLayout>
+      <Hero />
+    </PageLayout>
   );
 }
