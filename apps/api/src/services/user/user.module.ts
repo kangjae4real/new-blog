@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { RDBModule } from '@/rdb/rdb.module';
 import { UserService } from '@/services/user/user.service';
+import { RepositoriesModule } from '@/repositories/repositories.module';
 
 @Module({
-  imports: [RDBModule],
+  imports: [RepositoriesModule],
   providers: [UserService],
   exports: [UserService],
 })
