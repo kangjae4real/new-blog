@@ -1,6 +1,8 @@
 import { cva, VariantProps } from "class-variance-authority";
 import { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { INDEX_PAGE } from "@/lib/page";
 
 const typographyVariants = cva("", {
   variants: {
@@ -109,5 +111,13 @@ export const Muted = ({ className, children, ...props }: TypographyProps<HTMLPar
     <p className={cn(typographyVariants({ type: "muted" }), className)} {...props}>
       {children}
     </p>
+  );
+};
+
+export const Logo = ({ className, ...props }: Omit<TypographyProps<HTMLAnchorElement>, "children" | "type">) => {
+  return (
+    <Link href={INDEX_PAGE} className={className} {...props}>
+      <Large>Kangjae.dev</Large>
+    </Link>
   );
 };
