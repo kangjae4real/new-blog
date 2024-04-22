@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
+import { ENTITY_ROOT, MIGRATION_ROOT, SRC_ROOT } from '@/constants';
 
 const typeorm = TypeOrmModule.forRootAsync({
   inject: [ConfigService],
@@ -12,6 +13,10 @@ const typeorm = TypeOrmModule.forRootAsync({
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_NAME'),
     synchronize: configService.get('ENV') === 'local',
+    entities: [ENTITY_ROOT],
+    autoLoadEntities: configService.get('ENV') === 'local',
+    migrations: [MIGRATION_ROOT],
+    migrationsTableName: 'migration_table',
   }),
 });
 

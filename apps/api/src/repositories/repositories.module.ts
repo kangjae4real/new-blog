@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { RDBModule } from '@/rdb/rdb.module';
 import {
-  UserRepository,
-  UserRepositoryFactory,
-} from '@/repositories/user.repository';
+  UsersRepository,
+  UsersRepositoryFactory,
+} from '@/repositories/users.repository';
 
 @Module({
   imports: [RDBModule],
-  providers: [UserRepository, UserRepositoryFactory],
-  exports: [UserRepository, UserRepositoryFactory],
+  providers: [UsersRepository, UsersRepositoryFactory],
+  exports: [UsersRepository, UsersRepositoryFactory],
 })
 export class RepositoriesModule {}

@@ -1,0 +1,7 @@
+# packages and build
+node_modules
+.next
+
+# ignore
+.gitignore
+.dockerignore

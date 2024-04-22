@@ -7,7 +7,10 @@ export type SwaggerUtilParams<ReturnType = void> = (
   path?: string,
 ) => ReturnType;
 
-export const getDocument: SwaggerUtilParams<OpenAPIObject> = (app, title) => {
+export const getDocument: SwaggerUtilParams<OpenAPIObject> = (
+  app,
+  title,
+): OpenAPIObject => {
   const config = new DocumentBuilder()
     .setTitle(title ?? 'Kangjae Choi - Blog API')
     .build();
@@ -15,6 +18,6 @@ export const getDocument: SwaggerUtilParams<OpenAPIObject> = (app, title) => {
   return SwaggerModule.createDocument(app, config);
 };
 
-export const setUpSwagger: SwaggerUtilParams = (app, _, path) => {
+export const setUpSwagger: SwaggerUtilParams = (app, _, path): void => {
   SwaggerModule.setup(path ?? 'docs', app, getDocument(app));
 };

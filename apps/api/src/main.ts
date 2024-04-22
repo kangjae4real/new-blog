@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { setUpSwagger } from '@/swagger/swagger';
 
 async function app() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RootApiModule } from '@/apis/root/root.module';
-import { UserApiModule } from '@/apis/user/user.module';
+import { UsersApiModule } from '@/apis/users/users.module';
 
 @Module({
   imports: [
@@ -10,7 +10,7 @@ import { UserApiModule } from '@/apis/user/user.module';
       isGlobal: true,
     }),
     RootApiModule,
-    UserApiModule,
+    UsersApiModule,
   ],
 })
 export class AppModule {}
