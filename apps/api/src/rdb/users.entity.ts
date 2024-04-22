@@ -1,4 +1,12 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import * as bcryptjs from 'bcryptjs';
 
 @Entity('users')
@@ -15,13 +23,16 @@ export class UsersEntity {
   @Column('varchar')
   password: string;
 
-  @Column({ type: 'timestamp' })
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
   createdAt: string;
 
-  @Column({ type: 'timestamp', default: null })
+  @UpdateDateColumn({ type: 'timestamp', default: null, nullable: true })
   updatedAt: string;
 
-  @Column({ type: 'timestamp', default: null })
+  @DeleteDateColumn({ type: 'timestamp', default: null, nullable: true })
   deletedAt: string;
 
   @BeforeInsert()
