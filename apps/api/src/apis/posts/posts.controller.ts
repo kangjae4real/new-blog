@@ -70,6 +70,10 @@ export class PostsController {
     return updateResult;
   }
 
+  @ApiOperation({
+    summary: 'Delete one post',
+    description: 'Delete one post',
+  })
   @Delete(':id')
   async deletePost(@Param('id') id: number) {
     if (!id) {
