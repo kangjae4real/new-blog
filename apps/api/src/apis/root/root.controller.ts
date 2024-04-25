@@ -9,7 +9,7 @@ export class RootController {
     description: 'Returned default text',
   })
   @Get()
-  root(): string {
+  public root(): string {
     return 'Kangjae Choi Blog - API';
   }
 }

@@ -7,7 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from '@/services/users/users.service';
 import { CreateUsersRequest, UsersResponse } from '@/services/users/users.dto';
 
@@ -16,8 +16,12 @@ import { CreateUsersRequest, UsersResponse } from '@/services/users/users.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @ApiOperation({
+    summary: 'Get one user',
+    description: 'Get one user with id',
+  })
   @Get(':id')
-  async getUser(@Param('id') id: number): Promise<UsersResponse> {
+  public async getUser(@Param('id') id: number): Promise<UsersResponse> {
     if (!id) {
       throw new BadRequestException(`"id" is missing.`);
     }
@@ -31,8 +35,12 @@ export class UsersController {
     return findResult;
   }
 
+  @ApiOperation({
+    summary: 'Create user',
+    description: 'Create one user',
+  })
   @Post()
-  async createUser(
+  public async createUser(
     @Body() createUser: CreateUsersRequest,
   ): Promise<UsersResponse> {
     if (!createUser.name || !createUser.email || !createUser.password) {

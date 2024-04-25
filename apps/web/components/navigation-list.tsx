@@ -25,7 +25,6 @@ export interface NavigationItem {
 const LIST: NavigationItem[] = [
   { href: "/resume", label: "Resume" },
   { href: "/posts", label: "Posts" },
-  { href: "/sign-in", label: "Sign in" },
 ];
 
 export interface NavigationListProps
@@ -37,7 +36,7 @@ const NavigationList = ({ className }: NavigationListProps) => {
   const [ready] = useClient();
 
   if (!ready) {
-    return <Skeleton className="h-[36px] w-[240px] rounded border" />;
+    return <Skeleton className="h-[36px] w-[158px] rounded border" />;
   }
 
   return (
