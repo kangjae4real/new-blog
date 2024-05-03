@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UsersResponse {
   @ApiProperty()
@@ -26,4 +26,15 @@ export class CreateUsersRequest {
 
   @ApiProperty({ required: true })
   password: string;
+}
+
+export class UpdateUsersRequest {
+  @ApiPropertyOptional()
+  name?: string;
+
+  @ApiPropertyOptional()
+  email?: string;
+
+  @ApiPropertyOptional()
+  password?: string;
 }

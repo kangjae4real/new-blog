@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class PostsResponse {
   @ApiProperty()
@@ -32,9 +32,9 @@ export class CreatePostsRequest {
 }
 
 export class UpdatePostsRequest {
-  @ApiProperty({ required: true })
-  title: string;
+  @ApiPropertyOptional()
+  title?: string;
 
-  @ApiProperty({ required: true })
-  content: string;
+  @ApiPropertyOptional()
+  content?: string;
 }

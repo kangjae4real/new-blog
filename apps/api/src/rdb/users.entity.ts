@@ -1,5 +1,6 @@
 import {
   BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -36,6 +37,7 @@ export class UsersEntity {
   deletedAt: string;
 
   @BeforeInsert()
+  @BeforeUpdate()
   private async insertPassword() {
     const salt = bcryptjs.genSaltSync(10);
     this.password = bcryptjs.hashSync(this.password, salt);

@@ -1,7 +1,6 @@
 import { EntityManager } from 'typeorm';
 import {
   CreatePostsRequest,
-  PostsResponse,
   UpdatePostsRequest,
 } from '@/services/posts/posts.dto';
 import { PostsEntity } from '@/rdb/posts.entity';
@@ -9,7 +8,7 @@ import { PostsEntity } from '@/rdb/posts.entity';
 export class PostsRepository {
   constructor(private readonly entityManager: EntityManager) {}
 
-  public async findOne(uniqueId: number): Promise<PostsResponse | null> {
+  public async findOne(uniqueId: number): Promise<PostsEntity | null> {
     const findResult = await this.entityManager.findOne(PostsEntity, {
       where: {
         id: uniqueId,
@@ -23,26 +22,42 @@ export class PostsRepository {
     return findResult;
   }
 
-  public async update(
-    uniqueId: number,
-    updatePosts: UpdatePostsRequest,
-  ): Promise<PostsResponse | null> {
-    const updateResult = await this.entityManager.update(
-      PostsEntity,
-      {
-        id: uniqueId,
-      },
-      updatePosts,
-    );
+  public async find(): Promise<PostsEntity[] | null> {
+    const findResult = await this.entityManager.find(PostsEntity);
 
-    if (!updateResult.affected) {
+    if (!findResult) {
       return null;
     }
 
-    return await this.findOne(uniqueId);
+    return findResult;
   }
 
-  public async delete(uniqueId: number): Promise<PostsResponse | null> {
+  public async update(
+    uniqueId: number,
+    { title, content }: UpdatePostsRequest,
+  ): Promise<PostsEntity | null> {
+    const post = await this.findOne(uniqueId);
+
+    if (!post) {
+      return null;
+    }
+    if (title) {
+      post.title = title;
+    }
+    if (content) {
+      post.content = content;
+    }
+
+    const updateResult = await this.entityManager.save(post);
+
+    if (!updateResult) {
+      return null;
+    }
+
+    return updateResult;
+  }
+
+  public async delete(uniqueId: number): Promise<PostsEntity | null> {
     const findResult = await this.findOne(uniqueId);
 
     if (!findResult) {
@@ -60,7 +75,7 @@ export class PostsRepository {
     return findResult;
   }
 
-  public async create(createPosts: CreatePostsRequest): Promise<PostsResponse> {
+  public async create(createPosts: CreatePostsRequest): Promise<PostsEntity> {
     const { title, content, writer } = createPosts;
     const createResult = this.entityManager.create(PostsEntity, {
       title,

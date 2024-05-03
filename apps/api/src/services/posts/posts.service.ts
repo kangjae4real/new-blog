@@ -14,7 +14,7 @@ export class PostsService {
     private readonly postsRepositoryFactory: PostsRepositoryFactory,
   ) {}
 
-  public async findOne(uniqueId: number): Promise<PostsResponse> {
+  public async findOne(uniqueId: number): Promise<PostsResponse | null> {
     return await this.dataSource.transaction(async (entityManager) => {
       const postsRepository = this.postsRepositoryFactory.create(entityManager);
       const findResult = await postsRepository.findOne(uniqueId);
@@ -23,16 +23,22 @@ export class PostsService {
         return null;
       }
 
-      const { id, title, content, writer, createdAt, updatedAt } = findResult;
+      const { deletedAt, ...posts } = findResult;
 
-      return {
-        id,
-        title,
-        content,
-        writer,
-        createdAt,
-        updatedAt,
-      };
+      return posts;
+    });
+  }
+
+  public async find(): Promise<PostsResponse[] | null> {
+    return await this.dataSource.transaction(async (entityManager) => {
+      const postsRepository = this.postsRepositoryFactory.create(entityManager);
+      const findResult = await postsRepository.find();
+
+      if (!findResult) {
+        return null;
+      }
+
+      return findResult.map(({ deletedAt, ...post }) => post);
     });
   }
 
@@ -42,7 +48,11 @@ export class PostsService {
   ): Promise<PostsResponse | null> {
     return await this.dataSource.transaction(async (entityManager) => {
       const postsRepository = this.postsRepositoryFactory.create(entityManager);
-      return await postsRepository.update(uniqueId, updatePosts);
+      const updateResult = await postsRepository.update(uniqueId, updatePosts);
+
+      const { deletedAt, ...post } = updateResult;
+
+      return post;
     });
   }
 
@@ -59,17 +69,9 @@ export class PostsService {
     return await this.dataSource.transaction(async (entityManager) => {
       const postsRepository = this.postsRepositoryFactory.create(entityManager);
 
-      const { id, title, content, writer, createdAt, updatedAt } =
-        await postsRepository.create(createPosts);
+      const { deletedAt, ...post } = await postsRepository.create(createPosts);
 
-      return {
-        id,
-        title,
-        content,
-        writer,
-        createdAt,
-        updatedAt,
-      };
+      return post;
     });
   }
 }

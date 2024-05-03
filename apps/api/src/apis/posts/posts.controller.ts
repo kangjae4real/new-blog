@@ -6,10 +6,17 @@ import {
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   CreatePostsRequest,
   PostsResponse,
@@ -26,15 +33,41 @@ export class PostsController {
     summary: 'Get posts',
     description: 'Get posts',
   })
+  @ApiOkResponse({
+    description: 'Successfully response',
+    type: PostsResponse,
+    isArray: true,
+  })
+  @ApiNotFoundResponse({
+    description: 'Posts not found.',
+  })
   @Get()
-  public async getPosts() {}
+  public async getPosts(): Promise<PostsResponse[]> {
+    const findResult = await this.postsService.find();
+
+    if (!findResult || !findResult.length) {
+      throw new NotFoundException('Posts not found.');
+    }
+
+    return findResult;
+  }
 
   @ApiOperation({
     summary: 'Get one post',
     description: 'Get one post with id',
   })
+  @ApiOkResponse({
+    description: 'Successfully response',
+    type: PostsResponse,
+  })
+  @ApiBadRequestResponse({
+    description: `"id" is missing.`,
+  })
+  @ApiNotFoundResponse({
+    description: 'Posts not found.',
+  })
   @Get(':id')
-  public async getPost(@Param('id') id: number) {
+  public async getPost(@Param('id') id: number): Promise<PostsResponse> {
     if (!id) {
       throw new BadRequestException(`"id" is missing.`);
     }
@@ -52,13 +85,23 @@ export class PostsController {
     summary: 'Update one post',
     description: 'Update one post',
   })
-  @Put(':id')
+  @ApiOkResponse({
+    description: 'Successfully response',
+    type: PostsResponse,
+  })
+  @ApiBadRequestResponse({
+    description: `"id" or "title" or "content" is missing.`,
+  })
+  @ApiNotFoundResponse({
+    description: 'Posts not found.',
+  })
+  @Patch(':id')
   public async updatePost(
     @Param('id') id: number,
     @Body() updatePost: UpdatePostsRequest,
   ): Promise<PostsResponse> {
-    if (!id || !updatePost.title || !updatePost.content) {
-      throw new BadRequestException();
+    if (!id) {
+      throw new BadRequestException(`"id" is missing.`);
     }
 
     const updateResult = await this.postsService.update(id, updatePost);
@@ -74,8 +117,18 @@ export class PostsController {
     summary: 'Delete one post',
     description: 'Delete one post',
   })
+  @ApiOkResponse({
+    description: 'Successfully response',
+    type: PostsResponse,
+  })
+  @ApiBadRequestResponse({
+    description: `"id" is missing.`,
+  })
+  @ApiNotFoundResponse({
+    description: 'Posts not found.',
+  })
   @Delete(':id')
-  async deletePost(@Param('id') id: number) {
+  async deletePost(@Param('id') id: number): Promise<PostsResponse> {
     if (!id) {
       throw new BadRequestException(`"id" is missing.`);
     }
@@ -93,12 +146,21 @@ export class PostsController {
     summary: 'Create one post',
     description: 'Create one post',
   })
+  @ApiOkResponse({
+    description: 'Successfully response',
+    type: PostsResponse,
+  })
+  @ApiBadRequestResponse({
+    description: `"title" or "content" or "writer" is missing.`,
+  })
   @Post()
   public async createPost(
     @Body() createPost: CreatePostsRequest,
   ): Promise<PostsResponse> {
     if (!createPost.title || !createPost.content || !createPost.writer) {
-      throw new BadRequestException();
+      throw new BadRequestException(
+        `"title" or "content" or "writer" is missing.`,
+      );
     }
 
     return await this.postsService.createPost(createPost);

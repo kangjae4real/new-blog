@@ -1,10 +1,6 @@
 import { Module } from '@nestjs/common';
 import { RDBModule } from '@/rdb/rdb.module';
 import {
-  AuthRepository,
-  AuthRepositoryFactory,
-} from '@/repositories/auth.repository';
-import {
   UsersRepository,
   UsersRepositoryFactory,
 } from '@/repositories/users.repository';
@@ -16,16 +12,12 @@ import {
 @Module({
   imports: [RDBModule],
   providers: [
-    AuthRepository,
-    AuthRepositoryFactory,
     UsersRepository,
     UsersRepositoryFactory,
     PostsRepository,
     PostsRepositoryFactory,
   ],
   exports: [
-    AuthRepository,
-    AuthRepositoryFactory,
     UsersRepository,
     UsersRepositoryFactory,
     PostsRepository,
