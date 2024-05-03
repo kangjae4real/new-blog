@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -145,7 +146,7 @@ export class UsersController {
     summary: 'Create user',
     description: 'Create one user',
   })
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     description: 'Successfully response',
     type: UsersResponse,
   })

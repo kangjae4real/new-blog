@@ -8,10 +8,10 @@ import {
   Param,
   Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -146,7 +146,7 @@ export class PostsController {
     summary: 'Create post',
     description: 'Create one post',
   })
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     description: 'Successfully response',
     type: PostsResponse,
   })
