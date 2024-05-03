@@ -143,7 +143,7 @@ export class PostsController {
   }
 
   @ApiOperation({
-    summary: 'Create one post',
+    summary: 'Create post',
     description: 'Create one post',
   })
   @ApiOkResponse({

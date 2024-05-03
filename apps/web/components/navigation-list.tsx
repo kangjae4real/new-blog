@@ -22,7 +22,7 @@ export interface NavigationItem {
   label: string;
 }
 
-const LIST: NavigationItem[] = [
+const NAVIGATION_LIST: NavigationItem[] = [
   { href: "/resume", label: "Resume" },
   { href: "/posts", label: "Posts" },
 ];
@@ -42,7 +42,7 @@ const NavigationList = ({ className }: NavigationListProps) => {
   return (
     <NavigationMenu className={cn(navigationListVariants(), className)}>
       <NavigationMenuList>
-        {LIST.map(({ href, label }, index) => (
+        {NAVIGATION_LIST.map(({ href, label }, index) => (
           <NavigationMenuItem key={index}>
             <Link href={href}>
               <NavigationMenuLink className={triggerStyle}>{label}</NavigationMenuLink>
