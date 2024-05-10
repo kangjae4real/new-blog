@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import { ThemeProvider } from "@/providers/theme-provider";
+import ThemeProvider from "@/providers/theme-provider";
+import QueryProvider from "@/providers/query-provider";
 import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
@@ -19,10 +20,12 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={cn("bg-background min-h-screen font-sans antialiased", fontSans.variable)}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+        <QueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            {children}
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
