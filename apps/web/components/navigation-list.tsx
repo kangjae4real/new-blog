@@ -44,9 +44,9 @@ const NavigationList = ({ className }: NavigationListProps) => {
       <NavigationMenuList>
         {NAVIGATION_LIST.map(({ href, label }, index) => (
           <NavigationMenuItem key={index}>
-            <Link href={href}>
-              <NavigationMenuLink className={triggerStyle}>{label}</NavigationMenuLink>
-            </Link>
+            <NavigationMenuLink className={triggerStyle} asChild>
+              <Link href={href}>{label}</Link>
+            </NavigationMenuLink>
           </NavigationMenuItem>
         ))}
       </NavigationMenuList>
