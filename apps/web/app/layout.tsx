@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import ThemeProvider from "@/providers/theme-provider";
 import QueryProvider from "@/providers/query-provider";
+import ThemeProvider from "@/providers/theme-provider";
 import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
