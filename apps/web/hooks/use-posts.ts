@@ -3,7 +3,7 @@ import { getOnePost, getPosts } from "@/client/posts";
 
 const usePosts = (limit?: number) => {
   return useQuery({
-    queryKey: ["posts", limit],
+    queryKey: ["posts", limit ?? "no-limit"],
     queryFn: () => getPosts(limit),
   });
 };

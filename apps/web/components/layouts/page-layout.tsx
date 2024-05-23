@@ -32,7 +32,7 @@ const PageLayout = ({
   return (
     <div className={cn(pageLayoutVariants({ variant }), className)} {...props}>
       {!hideHeader && <Header />}
-      <div className="h-full min-h-[550px] w-full px-4 py-4 lg:px-0">{children}</div>
+      <div className="h-full min-h-[650px] w-full px-4 py-4 lg:px-0">{children}</div>
       {!hideFooter && <Footer />}
     </div>
   );

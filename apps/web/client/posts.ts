@@ -4,7 +4,7 @@ import { Post } from "@/types/type.posts";
 type GetPosts = (limit?: number) => Promise<Post[]>;
 type GetOnePost = (index: number) => Promise<Post>;
 
-const getPosts: GetPosts = async (limit = 10) => {
+const getPosts: GetPosts = async (limit) => {
   const { data } = await axios.get<Post[]>("/posts");
 
   if (!limit) {

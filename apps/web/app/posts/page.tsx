@@ -21,8 +21,9 @@ export default function PostsPage() {
 
     return (
       <List
-        className="mt-6 cursor-pointer"
+        className="mt-6"
         listClassname="grid grid-cols-1 gap-4 lg:grid-cols-2"
+        itemClassname="cursor-pointer"
         list={posts}
         loading={isLoading || !posts}
         render={(post) => <PostCard contentEllipsis {...post} />}
