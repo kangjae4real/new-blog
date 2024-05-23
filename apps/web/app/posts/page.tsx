@@ -1,14 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
 import PageLayout from "@/components/layouts/page-layout";
-import Hero from "@/components/hero";
-import List from "@/components/list";
 import { usePosts } from "@/hooks/use-posts";
+import { useMemo } from "react";
+import List from "@/components/list";
 import PostCard from "@/components/post-card";
 
-export default function IndexPage() {
-  const { isLoading, data: posts, error } = usePosts(6);
+export default function PostsPage() {
+  const { isLoading, data: posts, error } = usePosts();
 
   const content = useMemo(() => {
     if (error) {
@@ -22,9 +21,8 @@ export default function IndexPage() {
 
     return (
       <List
-        className="mt-6"
-        listClassname="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:grid-rows-3"
-        itemClassname="cursor-pointer"
+        className="mt-6 cursor-pointer"
+        listClassname="grid grid-cols-1 gap-4 lg:grid-cols-2"
         list={posts}
         loading={isLoading || !posts}
         render={(post) => <PostCard contentEllipsis {...post} />}
@@ -32,10 +30,5 @@ export default function IndexPage() {
     );
   }, [isLoading, posts, error]);
 
-  return (
-    <PageLayout>
-      <Hero size="sm" />
-      {content}
-    </PageLayout>
-  );
+  return <PageLayout>{content}</PageLayout>;
 }

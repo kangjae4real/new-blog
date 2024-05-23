@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 import { ClassValue } from "clsx";
 import { cn } from "@/lib/utils";
-import Loading from "@/components/loading";
+import { LoadingCard } from "@/components/loading-card";
 
 interface ListProps<Item> extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   render: (item: Item) => React.ReactNode;
@@ -14,7 +14,7 @@ interface ListProps<Item> extends Omit<HTMLAttributes<HTMLDivElement>, "children
 const List = <Item,>({ list, render, loading, className, listClassname, itemClassname }: ListProps<Item>) => {
   return (
     <div className={cn("flex h-full w-full items-center justify-center", className)}>
-      {loading && !list && <Loading size="sm" />}
+      {loading && !list && <LoadingCard multiple={6} />}
       {!loading && list && (
         <ul className={cn(listClassname)}>
           {list.map((value, index) => (
