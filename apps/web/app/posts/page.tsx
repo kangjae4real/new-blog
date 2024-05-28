@@ -24,6 +24,7 @@ export default function PostsPage() {
         className="mt-6"
         listClassname="grid grid-cols-1 gap-4 lg:grid-cols-2"
         itemClassname="cursor-pointer"
+        multiple={8}
         list={posts}
         loading={isLoading || !posts}
         render={(post) => <PostCard contentEllipsis {...post} />}

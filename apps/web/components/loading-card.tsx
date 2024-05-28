@@ -1,24 +1,37 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMemo } from "react";
 
-interface LoadingCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LoadingCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  withGrid?: boolean;
   multiple?: number;
+  cardClassname?: string;
 }
 
-const LoadingCard = React.forwardRef<HTMLDivElement, LoadingCardProps>(({ className, multiple, ...props }, ref) => {
-  const array = new Array(multiple).fill(0);
+const LoadingCard = React.forwardRef<HTMLDivElement, LoadingCardProps>(
+  ({ className, withGrid = false, multiple, cardClassname, ...props }, ref) => {
+    const array = new Array(multiple).fill(0);
 
-  return (
-    <div ref={ref} className={cn("grid h-full w-full grid-cols-1 gap-4 lg:grid-cols-2", className)} {...props}>
-      {multiple ? (
-        array.map((_, index) => <Skeleton key={index} className="h-[140px] w-full rounded" />)
+    const content = useMemo(() => {
+      return multiple ? (
+        array.map((_, index) => <Skeleton key={index} className={cn("h-[140px] w-full rounded", cardClassname)} />)
       ) : (
-        <Skeleton className="h-[140px] w-full rounded" />
-      )}
-    </div>
-  );
-});
+        <Skeleton className={cn("h-[140px] w-full rounded", cardClassname)} />
+      );
+    }, [multiple]);
+
+    if (!withGrid) {
+      return content;
+    }
+
+    return (
+      <div ref={ref} className={cn("grid h-full w-full grid-cols-1 gap-4 lg:grid-cols-2", className)} {...props}>
+        {content}
+      </div>
+    );
+  },
+);
 LoadingCard.displayName = "CardLoading";
 
 export { LoadingCard };

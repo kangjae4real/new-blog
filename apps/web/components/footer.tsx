@@ -4,19 +4,14 @@ import { cn } from "@/lib/utils";
 import { P } from "@/components/typography";
 import dayjs from "dayjs";
 
-const footerVariants = cva("w-full h-[60px] flex items-center");
+const footerVariants = cva("w-full h-[60px] flex items-center px-4 lg:px-0");
 
 interface FooterProps extends Omit<HTMLAttributes<HTMLDivElement>, "children">, VariantProps<typeof footerVariants> {}
 
 const Footer = ({ className, ...props }: FooterProps) => {
-  const year = useMemo(() => {
-    const date = dayjs();
-    return date.year();
-  }, []);
-
   return (
     <div className={cn(footerVariants(), className)} {...props}>
-      <P>© {year} by Kangjae Choi. All rights reserved.</P>
+      <P>© {dayjs().year()} by Kangjae Choi. All rights reserved.</P>
     </div>
   );
 };
